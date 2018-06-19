@@ -70,7 +70,7 @@ uint8_t front_timer;
 
 uint8_t preset_mode;
 
-__attribute__((__section__(".flash_nvram")))
+// __attribute__((__section__(".flash_nvram")))
 nvram_data_t f;
 
 ansible_mode_t ansible_mode;
@@ -78,14 +78,14 @@ ansible_mode_t ansible_mode;
 ////////////////////////////////////////////////////////////////////////////////
 // prototypes
 
-void clock_null(u8 phase);
+// void clock_null(u8 phase);
 
 // start/stop monome polling/refresh timers
 extern void timers_set_monome(void);
 extern void timers_unset_monome(void);
 
 // check the event queue
-static void check_events(void);
+void check_events(void);
 
 // handler protos
 static void handler_KeyTimer(s32 data);
@@ -428,7 +428,7 @@ void flash_read(void) {
 ////////////////////////////////////////////////////////////////////////////////
 // functions
 
-void clock_null(u8 phase) { ;; }
+// void clock_null(u8 phase) { ;; }
 
 void update_leds(uint8_t m) {
 	if(m & 1)
@@ -477,7 +477,7 @@ static void ii_null(uint8_t *d, uint8_t l) {
 ////////////////////////////////////////////////////////////////////////////////
 // main
 
-int main(void)
+void initialize_module(void)
 {
 	sysclk_init();
 
@@ -546,6 +546,11 @@ int main(void)
 
 	init_usb_host();
 	init_monome();
+}
+
+int main(void)
+{
+	initialize_module();
 
 	while (true) {
 		check_events();
